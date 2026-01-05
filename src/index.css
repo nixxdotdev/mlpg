@@ -1,68 +1,243 @@
 :root {
-  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
+  /* =========================
+     CORE BRAND COLORS
+     ========================= */
 
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
+  --brand-primary: #efef3f;
+  --brand-primary-soft: rgba(221, 221, 46, 0.39);
 
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  --brand-accent: #D789FC;
+
+  --ui-primary: #4A6BFF;
+  --ui-danger: #F41717;
+
+  /* =========================
+     NEUTRALS
+     ========================= */
+
+  --neutral-white: #FFFFFF;
+  --neutral-black: #000000;
+  --neutral-bg: #E0E0E0;
+
+  --neutral-text-primary: #000000;
+  --neutral-text-secondary: #655C5C;
+  --neutral-text-muted: #8A8A8A;
+
+  --neutral-border-light: #D0D0D0;
+  --neutral-border-dark: #B0B0B0;
+
+  /* =========================
+     TYPOGRAPHY
+     ========================= */
+
+  --font-base: 'Poppins', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+
+  --fw-light: 300;
+  --fw-regular: 400;
+  --fw-medium: 500;
+  --fw-semibold: 600;
+  --fw-bold: 700;
+
+  --fs-xs: clamp(0.75rem, 0.7vw, 0.8rem);
+  --fs-sm: clamp(0.875rem, 0.9vw, 0.95rem);
+  --fs-md: clamp(1rem, 1vw, 1.05rem);
+  --fs-lg: clamp(1.125rem, 1.3vw, 1.25rem);
+  --fs-xl: clamp(1.5rem, 2vw, 1.75rem);
+  --fs-xxl: clamp(2rem, 3vw, 2.5rem);
+
+  --lh-tight: 1.2;
+  --lh-normal: 1.5;
+  --lh-relaxed: 1.75;
+
+  /* =========================
+     SPACING & RADIUS
+     ========================= */
+
+  --space-xxs: 0.25rem;
+  --space-xs: 0.5rem;
+  --space-sm: 0.75rem;
+  --space-md: 1rem;
+  --space-lg: 1.5rem;
+  --space-xl: 2rem;
+
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 16px;
+
+  /* =========================
+     SHADOWS
+     ========================= */
+
+  --shadow-sm: 0 2px 6px rgba(0, 0, 0, 0.08);
+  --shadow-md: 0 6px 16px rgba(0, 0, 0, 0.12);
+
+  /* =========================
+     BOOTSTRAP VARIABLE MAPPING
+     ========================= */
+
+  --bs-primary: var(--ui-primary);
+  --bs-danger: var(--ui-danger);
+  --bs-secondary: var(--brand-accent);
+
+  --bs-body-bg: var(--neutral-bg);
+  --bs-body-color: var(--neutral-text-primary);
+
+  --bs-border-color: var(--neutral-border-light);
+
+  --bs-font-sans-serif: var(--font-base);
+
+  --bs-border-radius: var(--radius-md);
+  --bs-border-radius-sm: var(--radius-sm);
+  --bs-border-radius-lg: var(--radius-lg);
 }
 
-a {
-  font-weight: 500;
-  color: #646cff;
-  text-decoration: inherit;
-}
-a:hover {
-  color: #535bf2;
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
 }
 
 body {
   margin: 0;
-  display: flex;
-  place-items: center;
-  min-width: 320px;
-  min-height: 100vh;
+  font-family: var(--font-base);
+  font-size: var(--fs-md);
+  font-weight: var(--fw-regular);
+  line-height: var(--lh-normal);
+  background-color: var(--brand-primary-soft);
+  color: var(--neutral-text-primary);
+}
+
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-weight: var(--fw-semibold);
+  line-height: var(--lh-tight);
+  color: var(--neutral-text-primary);
 }
 
 h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
+  font-size: var(--fs-xxl);
 }
 
-button {
-  border-radius: 8px;
-  border: 1px solid transparent;
-  padding: 0.6em 1.2em;
-  font-size: 1em;
-  font-weight: 500;
+h2 {
+  font-size: var(--fs-xl);
+}
+
+h3 {
+  font-size: var(--fs-lg);
+}
+
+h4 {
+  font-size: var(--fs-md);
+}
+
+p {
+  font-size: var(--fs-md);
+  color: var(--neutral-text-secondary);
+}
+
+.button {
+  padding: var(--space-sm) var(--space-lg);
+  border-radius: var(--radius-md);
+  border: none;
   font-family: inherit;
-  background-color: #1a1a1a;
+  font-size: var(--fs-sm);
+  font-weight: var(--fw-medium);
   cursor: pointer;
-  transition: border-color 0.25s;
-}
-button:hover {
-  border-color: #646cff;
-}
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
+  transition: transform 0.1s ease;
 }
 
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
-  }
-  a:hover {
-    color: #747bff;
-  }
-  button {
-    background-color: #f9f9f9;
-  }
+.button-primary {
+  background-color: var(--ui-primary);
+  color: var(--neutral-white);
+}
+
+.button-danger {
+  background-color: var(--ui-danger);
+  color: var(--neutral-white);
+}
+
+.button:hover {
+  transform: translateY(-1px);
+}
+
+.nav-list {
+  display: flex;
+  gap: var(--space-lg);
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.nav-list a {
+  text-decoration: none;
+  color: var(--neutral-text-secondary);
+  font-size: var(--fs-xl);
+  font-weight: var(--fw-bold);
+}
+
+.nav-list a:hover {
+  color: var(--ui-primary);
+}
+
+.header-shadow {
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  /* only below */
+  z-index: 1000;
+  /* keep header above content */
+  background-color: var(--brand-primary);
+  /* optional for clarity */
+  position: sticky;
+  /* optional: stick to top on scroll */
+  top: 0;
+}
+
+/* Center tool-content in main */
+.main-container {
+  display: flex;
+  justify-content: center;
+  /* horizontal center */
+  align-items: center;
+  /* vertical center */
+  height: 89vh;
+  /* full viewport height */
+  background-color: var(--neutral-bg);
+}
+
+/* Container with 80% width and height */
+.tool-content {
+  display: flex;
+  /* horizontal layout */
+  width: 80%;
+  height: 80%;
+  background-color: var(--color-white);
+  box-shadow: var(--shadow-md);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+}
+
+/* Aside (sidebar) */
+.tool-content aside {
+  width: 20%;
+  height: 100%;
+  background-color: var(--brand-accent);
+  padding: var(--space-md);
+  box-sizing: border-box;
+  color: var(--neutral-white);
+}
+
+/* Main section */
+.tool-content section {
+  width: 80%;
+  height: 100%;
+  padding: var(--space-md);
+  box-sizing: border-box;
+  background-color: var(--neutral-bg);
+  color: var(--neutral-text-primary);
+  overflow-y: auto;
+  /* optional, scroll if content is tall */
 }
