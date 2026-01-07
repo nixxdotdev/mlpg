@@ -4,7 +4,7 @@
      ========================= */
 
   --brand-primary: #e1e176;
-  --brand-primary-soft: rgba(221, 221, 46, 0.195);
+  --brand-primary-soft: rgba(242, 242, 51, 0.544);
 
   --brand-accent: #D789FC;
 
@@ -635,4 +635,144 @@ p {
 
 .modal-buttons .button {
   flex: 1;
+}
+
+.landing-hero {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--color-bg);
+  text-align: center;
+}
+
+.orbit-container {
+  position: relative;
+  width: 300px;
+  height: 300px;
+  margin-bottom: var(--space-xl);
+}
+
+/* Orbits */
+.orbit {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  animation: rotate linear infinite;
+}
+
+.orbit-1 {
+  animation-duration: 12s;
+}
+
+.orbit-2 {
+  animation-duration: 18s;
+}
+
+.orbit-3 {
+  animation-duration: 25s;
+}
+
+/* Circles */
+.circle {
+  width: 190px;
+  height: 190px;
+  border-radius: 50%;
+  position: absolute;
+  top: -24px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.circle-primary {
+  background-color: var(--brand-primary);
+}
+
+.circle-accent {
+  background-color: var(--brand-accent);
+}
+
+.circle-soft {
+  background-color: var(--ui-primary);
+}
+
+/* Text */
+.hero-title {
+  margin-top: var(--space-md);
+  font-size: var(--fs-xxl);
+  font-weight: var(--fw-bold);
+}
+
+.hero-subtitle {
+  font-size: var(--fs-md);
+  color: var(--color-text-secondary);
+}
+
+/* Animation */
+@keyframes rotate {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Full-screen sections */
+.landing,
+.welcome {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Landing subtle exit */
+.landing {
+  transition: opacity 0.6s ease;
+}
+
+.welcome {
+  opacity: 0;
+  transform: translateY(60px);
+  transition: opacity 0.8s ease, transform 0.8s ease;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+}
+
+.welcome.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Optional hint */
+.scroll-hint {
+  margin-top: var(--space-xl);
+  font-size: var(--fs-sm);
+  opacity: 0.6;
+}
+
+.welcome.visible~.landing {
+  opacity: 0.3;
+}
+
+.welcome-card {
+  background-color: var(--brand-primary-soft);
+  padding: var(--space-xl);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-md);
+  text-align: center;
+}
+
+.welcome-card p {
+  color: var(--neutral-text-primary);
+  font-weight: var(--fw-semibold);
+}
+
+.welcome-card h1 {
+  font-weight: var(--fw-bold);
 }
