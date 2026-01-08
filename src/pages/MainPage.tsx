@@ -80,7 +80,7 @@ const MainPage: React.FC = () => {
                     className="img-fluid"
                     style={{ height: "auto", width: "70px" }}
                   />
-                  Activity Generator
+                  DLP Generator
                 </a>
               </li>
               <li>

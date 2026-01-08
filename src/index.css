@@ -776,3 +776,38 @@ p {
 .welcome-card h1 {
   font-weight: var(--fw-bold);
 }
+
+.main-container {
+  background-color: var(--color-bg);
+}
+
+.auth-wrapper {
+  justify-content: space-evenly;
+  overflow: hidden;
+}
+
+.auth-form input {
+  width: 100%;
+  font-size: var(--fs-md);
+  border: 1px solid var(--color-border-light);
+}
+
+.auth-form .button {
+  margin-top: var(--space-md);
+}
+
+.cursor-pointer {
+  cursor: pointer;
+  color: var(--color-button-primary);
+}
+
+@media (max-width: 768px) {
+  .auth-wrapper {
+    flex-direction: column;
+  }
+
+  .auth-illustration {
+    display: none;
+    /* hide illustration on small screens */
+  }
+}
