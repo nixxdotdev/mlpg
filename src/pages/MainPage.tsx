@@ -345,6 +345,34 @@ const MainPage: React.FC = () => {
                         />
                         <input
                           type="text"
+                          placeholder="Content Standards"
+                          disabled={isGenerating}
+                        />
+                      </div>
+
+                      {/* Input */}
+                      <div className="generator-input">
+                        <img
+                          src={searchIcon}
+                          alt="Search"
+                          className="generator-icon"
+                        />
+                        <input
+                          type="text"
+                          placeholder="Performance Standards"
+                          disabled={isGenerating}
+                        />
+                      </div>
+
+                      {/* Input */}
+                      <div className="generator-input">
+                        <img
+                          src={searchIcon}
+                          alt="Search"
+                          className="generator-icon"
+                        />
+                        <input
+                          type="text"
                           placeholder="Competency / Objectives"
                           disabled={isGenerating}
                         />
@@ -408,8 +436,19 @@ const MainPage: React.FC = () => {
 
               <div className="paper-container">
                 <div className="paper-page">
-                  <h1>Lesson Title</h1>
-                  <p>This is where your lesson content goes.</p>
+                  <header className="paper-header d-flex flex-row justify-content-between">
+                    <h3>
+                      <strong>Learning Area:</strong> Mathematics
+                    </h3>
+                    <h3>
+                      <strong>Grade Level:</strong> ONE
+                    </h3>
+                  </header>
+
+                  <p contentEditable="true" className="editor-area">
+                    Need Assistance? Click DLP Generator and our AI will help
+                    you
+                  </p>
                 </div>
               </div>
             </div>
