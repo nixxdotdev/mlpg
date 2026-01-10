@@ -5,6 +5,9 @@ import dlIcon from "../assets/img/download_icon.png";
 import editIcon from "../assets/img/edit_icon.png";
 import layIcon from "../assets/img/layout_icon.png";
 import searchIcon from "../assets/img/search_icon.png";
+import { useEditor, EditorContent } from "@tiptap/react";
+import StarterKit from "@tiptap/starter-kit";
+import TextAlign from "@tiptap/extension-text-align";
 
 const MainPage: React.FC = () => {
   const [activeTool, setActiveTool] = useState<
@@ -15,6 +18,18 @@ const MainPage: React.FC = () => {
     // Toggle if same tool is clicked
     setActiveTool((prev) => (prev === tool ? null : tool));
   };
+
+  const editor = useEditor({
+    extensions: [
+      StarterKit,
+      TextAlign.configure({
+        types: ["heading", "paragraph"],
+      }),
+    ],
+    content: `
+      <p>Need Assistance? Click DLP Generator and our AI will help you!</p>
+    `,
+  });
 
   const showDrawer = activeTool === "edit" || activeTool === "layout";
 
@@ -152,7 +167,7 @@ const MainPage: React.FC = () => {
                         </select>
                       </label>
 
-                      <label>
+                      <label className="d-flex direction-row">
                         Font Size:
                         <input
                           type="number"
@@ -160,17 +175,29 @@ const MainPage: React.FC = () => {
                           max="72"
                           defaultValue={14}
                         />{" "}
-                        px
+                        <p>px</p>
                       </label>
 
                       <div className="font-style-buttons">
-                        <button>
+                        <button
+                          onClick={() =>
+                            editor?.chain().focus().toggleBold().run()
+                          }
+                        >
                           <b>B</b>
                         </button>
-                        <button>
+                        <button
+                          onClick={() =>
+                            editor?.chain().focus().toggleItalic().run()
+                          }
+                        >
                           <i>I</i>
                         </button>
-                        <button>
+                        <button
+                          onClick={() =>
+                            editor?.chain().focus().toggleUnderline().run()
+                          }
+                        >
                           <u>U</u>
                         </button>
                       </div>
@@ -181,15 +208,35 @@ const MainPage: React.FC = () => {
                   <div className="tool-section">
                     <h3 className="tool-section-title">Paragraph</h3>
                     <div className="tool-controls">
-                      <label>
-                        Alignment:
-                        <select>
-                          <option>Left</option>
-                          <option>Center</option>
-                          <option>Right</option>
-                          <option>Justify</option>
-                        </select>
-                      </label>
+                      <label>Alignment:</label>
+                      <button
+                        onClick={() =>
+                          editor?.chain().focus().setTextAlign("left").run()
+                        }
+                      >
+                        Left
+                      </button>
+                      <button
+                        onClick={() =>
+                          editor?.chain().focus().setTextAlign("center").run()
+                        }
+                      >
+                        Center
+                      </button>
+                      <button
+                        onClick={() =>
+                          editor?.chain().focus().setTextAlign("right").run()
+                        }
+                      >
+                        Right
+                      </button>
+                      <button
+                        onClick={() =>
+                          editor?.chain().focus().setTextAlign("justify").run()
+                        }
+                      >
+                        Justify
+                      </button>
 
                       <label>
                         Line Height:
@@ -444,11 +491,8 @@ const MainPage: React.FC = () => {
                       <strong>Grade Level:</strong> ONE
                     </h3>
                   </header>
-
-                  <p contentEditable="true" className="editor-area">
-                    Need Assistance? Click DLP Generator and our AI will help
-                    you
-                  </p>
+                  <EditorContent editor={editor} />
+                  <EditorContent editor={editor} />
                 </div>
               </div>
             </div>

@@ -821,3 +821,15 @@ p {
 .paper-header p {
   margin: 0;
 }
+
+.ProseMirror {
+  min-height: 300px;
+  padding: 16px;
+  border: 1px solid #d1d1d1;
+  border-radius: 6px;
+  outline: none;
+}
+
+.ProseMirror:focus {
+  border-color: #4a90e2;
+}
