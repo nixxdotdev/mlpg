@@ -8,6 +8,10 @@ import searchIcon from "../assets/img/search_icon.png";
 import { useEditor, EditorContent } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import TextAlign from "@tiptap/extension-text-align";
+import ImageResize from "tiptap-extension-resize-image";
+import { FontSize, TextStyle } from "@tiptap/extension-text-style";
+import { FontFamily } from "../utils/FontFamily";
+import InsertImage from "../utils/InsertImage";
 
 const MainPage: React.FC = () => {
   const [activeTool, setActiveTool] = useState<
@@ -25,9 +29,16 @@ const MainPage: React.FC = () => {
       TextAlign.configure({
         types: ["heading", "paragraph"],
       }),
+      TextStyle,
+      FontSize,
+      FontFamily,
+      ImageResize.configure({
+        allowBase64: true,
+      }),
     ],
     content: `
       <p>Need Assistance? Click DLP Generator and our AI will help you!</p>
+      <img src="https://placehold.co/600x400" />
     `,
   });
 
@@ -160,22 +171,44 @@ const MainPage: React.FC = () => {
                     <div className="tool-controls">
                       <label>
                         Font Family:
-                        <select>
-                          <option>Poppins</option>
-                          <option>Arial</option>
-                          <option>Times New Roman</option>
+                        <select
+                          defaultValue="Arial"
+                          onChange={(e) =>
+                            editor
+                              ?.chain()
+                              .focus()
+                              .setFontFamily(e.target.value)
+                              .run()
+                          }
+                        >
+                          <option value="Arial">Arial</option>
+                          <option value="Times New Roman">
+                            Times New Roman
+                          </option>
+                          <option value="Georgia">Georgia</option>
+                          <option value="Courier New">Courier New</option>
+                          <option value="Inter">Inter</option>
                         </select>
                       </label>
 
                       <label className="d-flex direction-row">
                         Font Size:
-                        <input
-                          type="number"
-                          min="8"
-                          max="72"
-                          defaultValue={14}
-                        />{" "}
-                        <p>px</p>
+                        <select
+                          defaultValue={"14px"}
+                          onChange={(e) =>
+                            editor
+                              ?.chain()
+                              .focus()
+                              .setFontSize(e.target.value)
+                              .run()
+                          }
+                        >
+                          <option value="12px">12px</option>
+                          <option value="14px">14px</option>
+                          <option value="16px">16px</option>
+                          <option value="18px">18px</option>
+                          <option value="24px">24px</option>
+                        </select>
                       </label>
 
                       <div className="font-style-buttons">
@@ -237,28 +270,6 @@ const MainPage: React.FC = () => {
                       >
                         Justify
                       </button>
-
-                      <label>
-                        Line Height:
-                        <input
-                          type="number"
-                          min="1"
-                          max="3"
-                          step="0.1"
-                          defaultValue={1.5}
-                        />
-                      </label>
-
-                      <label>
-                        Spacing:
-                        <input
-                          type="number"
-                          min="0"
-                          max="50"
-                          defaultValue={10}
-                        />{" "}
-                        px
-                      </label>
                     </div>
                   </div>
 
@@ -266,9 +277,7 @@ const MainPage: React.FC = () => {
                   <div className="tool-section">
                     <h3 className="tool-section-title">Illustrations</h3>
                     <div className="tool-controls">
-                      <button>Add Image</button>
-                      <button>Add Icon</button>
-                      <button>Add Diagram</button>
+                      <InsertImage editor={editor} />
                     </div>
                   </div>
                 </div>
@@ -491,7 +500,6 @@ const MainPage: React.FC = () => {
                       <strong>Grade Level:</strong> ONE
                     </h3>
                   </header>
-                  <EditorContent editor={editor} />
                   <EditorContent editor={editor} />
                 </div>
               </div>
