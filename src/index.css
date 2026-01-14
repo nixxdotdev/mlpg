@@ -217,7 +217,7 @@ p {
 .tool-content {
   display: flex;
   /* horizontal layout */
-  width: 80%;
+  width: 90%;
   height: 80%;
   background-color: var(--color-white);
   box-shadow: var(--shadow-md);
@@ -858,4 +858,20 @@ p {
 /* Optional: Show a border when the image is selected */
 .prose .node-imageResizer.has-focus img {
   outline: 3px solid #3b82f6;
+}
+
+.ProseMirror table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+.ProseMirror table td,
+.ProseMirror table th {
+  border: 1px solid #ccc;
+  padding: 8px;
+}
+
+.ProseMirror table th {
+  background: #f4f4f4;
+  font-weight: bold;
 }

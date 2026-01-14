@@ -1,17 +1,22 @@
 import React, { useState } from "react";
 import logo from "../assets/img/lpat_logo.png";
+import depedLogo from "../assets/img/deped-logo.png";
 import genIcon from "../assets/img/generator_icon.png";
 import dlIcon from "../assets/img/download_icon.png";
 import editIcon from "../assets/img/edit_icon.png";
-import layIcon from "../assets/img/layout_icon.png";
 import searchIcon from "../assets/img/search_icon.png";
 import { useEditor, EditorContent } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import TextAlign from "@tiptap/extension-text-align";
 import ImageResize from "tiptap-extension-resize-image";
+import { Table } from "@tiptap/extension-table";
+import TableRow from "@tiptap/extension-table-row";
+import TableCell from "@tiptap/extension-table-cell";
+import TableHeader from "@tiptap/extension-table-header";
 import { FontSize, TextStyle } from "@tiptap/extension-text-style";
 import { FontFamily } from "../utils/FontFamily";
 import InsertImage from "../utils/InsertImage";
+import type { CSSProperties } from "react";
 
 const MainPage: React.FC = () => {
   const [activeTool, setActiveTool] = useState<
@@ -35,6 +40,12 @@ const MainPage: React.FC = () => {
       ImageResize.configure({
         allowBase64: true,
       }),
+      Table.configure({
+        resizable: true, // optional
+      }),
+      TableRow,
+      TableCell,
+      TableHeader,
     ],
     content: `
       <p>Need Assistance? Click DLP Generator and our AI will help you!</p>
@@ -48,6 +59,10 @@ const MainPage: React.FC = () => {
   const [isGenerating, setIsGenerating] = useState(false);
   const [showDownload, setShowDownload] = useState(false);
   const [fileName, setFileName] = useState("");
+  const [paperSize, setPaperSize] = useState("A4");
+  const [orientation] = useState("Portrait");
+  const [margins, setMargins] = useState("Normal");
+  const [zoom, setZoom] = useState<number>(1);
 
   const handleGenerate = () => {
     setIsGenerating(true);
@@ -57,6 +72,42 @@ const MainPage: React.FC = () => {
       setIsGenerating(false);
       setShowGenerator(false);
     }, 2000);
+  };
+
+  const getPaperStyle = (size: string, orient: string, margin: string) => {
+    const sizes: Record<string, { width: string; height: string }> = {
+      A4: { width: "210mm", height: "297mm" },
+      Letter: { width: "216mm", height: "279mm" },
+      Legal: { width: "216mm", height: "356mm" },
+    };
+
+    const marginsMap: Record<string, string> = {
+      Normal: "15mm",
+      Narrow: "10mm",
+      Wide: "30mm",
+    };
+
+    const style: CSSProperties = {
+      background: "#fff",
+      boxShadow: "0 0 10px rgba(0,0,0,0.1)",
+      margin: "auto",
+      marginTop: "20px",
+      display: "block",
+      padding: marginsMap[margin],
+      transform: `scale(${zoom})`,
+      transformOrigin: "top center",
+    };
+
+    // Orientation
+    if (orient === "Portrait") {
+      style.width = sizes[size].width;
+      style.height = sizes[size].height;
+    } else {
+      style.width = sizes[size].height;
+      style.height = sizes[size].width;
+    }
+
+    return style;
   };
 
   return (
@@ -123,22 +174,6 @@ const MainPage: React.FC = () => {
                     style={{ height: "auto", width: "70px" }}
                   />
                   Edit
-                </a>
-              </li>
-              <li>
-                <a
-                  onClick={() => {
-                    handleToolClick("layout");
-                    setShowGenerator(false);
-                  }}
-                >
-                  <img
-                    src={layIcon}
-                    alt="Layout Logo"
-                    className="img-fluid"
-                    style={{ height: "auto", width: "70px" }}
-                  />
-                  Layout
                 </a>
               </li>
               <li>
@@ -273,96 +308,56 @@ const MainPage: React.FC = () => {
                     </div>
                   </div>
 
-                  {/* Illustrations Section */}
-                  <div className="tool-section">
-                    <h3 className="tool-section-title">Illustrations</h3>
-                    <div className="tool-controls">
-                      <InsertImage editor={editor} />
-                    </div>
-                  </div>
-                </div>
-              )}
-              {activeTool === "layout" && (
-                <div className="layout-tools">
                   {/* Page Setup Section */}
                   <div className="tool-section">
                     <h3 className="tool-section-title">Page Setup</h3>
                     <div className="tool-controls">
                       <label>
                         Paper Size:
-                        <select>
-                          <option>A4</option>
-                          <option>Letter</option>
-                          <option>Legal</option>
-                        </select>
-                      </label>
-
-                      <label>
-                        Orientation:
-                        <select>
-                          <option>Portrait</option>
-                          <option>Landscape</option>
+                        <select
+                          value={paperSize}
+                          onChange={(e) => setPaperSize(e.target.value)}
+                        >
+                          <option value="A4">A4</option>
+                          <option value="Letter">Letter</option>
+                          <option value="Legal">Legal</option>
                         </select>
                       </label>
 
                       <label>
                         Margins:
-                        <select>
-                          <option>Normal</option>
-                          <option>Narrow</option>
-                          <option>Wide</option>
+                        <select
+                          value={margins}
+                          onChange={(e) => setMargins(e.target.value)}
+                        >
+                          <option value="Normal">Normal</option>
+                          <option value="Narrow">Narrow</option>
+                          <option value="Wide">Wide</option>
+                        </select>
+                      </label>
+
+                      <label>
+                        Zoom:
+                        <select
+                          value={zoom}
+                          onChange={(e) => setZoom(Number(e.target.value))}
+                        >
+                          <option value={0.5}>50%</option>
+                          <option value={0.75}>75%</option>
+                          <option value={1}>100%</option>
+                          <option value={1.25}>125%</option>
+                          <option value={1.5}>150%</option>
+                          <option value={2}>200%</option>
                         </select>
                       </label>
                     </div>
                   </div>
 
-                  {/* Paragraph Section */}
+                  {/* Illustrations Section */}
                   <div className="tool-section">
-                    <h3 className="tool-section-title">Paragraph</h3>
+                    <h3 className="tool-section-title">Illustrations</h3>
                     <div className="tool-controls">
-                      <label>
-                        Alignment:
-                        <select>
-                          <option>Left</option>
-                          <option>Center</option>
-                          <option>Right</option>
-                          <option>Justify</option>
-                        </select>
-                      </label>
-
-                      <label>
-                        Line Spacing:
-                        <input
-                          type="number"
-                          min="1"
-                          max="3"
-                          step="0.1"
-                          defaultValue={1.5}
-                        />
-                      </label>
-
-                      <label>
-                        Indentation:
-                        <input
-                          type="number"
-                          min="0"
-                          max="50"
-                          defaultValue={0}
-                        />{" "}
-                        px
-                      </label>
-                    </div>
-                  </div>
-
-                  {/* Arrange Section */}
-                  <div className="tool-section">
-                    <h3 className="tool-section-title">Arrange</h3>
-                    <div className="tool-controls">
-                      <button>Bring Forward</button>
-                      <button>Send Backward</button>
-                      <button>Align Left</button>
-                      <button>Align Center</button>
-                      <button>Align Right</button>
+                      <InsertImage editor={editor} />
                     </div>
                   </div>
                 </div>
@@ -491,15 +486,69 @@ const MainPage: React.FC = () => {
               )}
 
               <div className="paper-container">
-                <div className="paper-page">
-                  <header className="paper-header d-flex flex-row justify-content-between">
-                    <h3>
-                      <strong>Learning Area:</strong> Mathematics
-                    </h3>
-                    <h3>
-                      <strong>Grade Level:</strong> ONE
-                    </h3>
+                <div
+                  className="paper-page"
+                  style={getPaperStyle(paperSize, orientation, margins)}
+                >
+                  {/* Header */}
+                  <header className="paper-header d-flex flex-column align-items-center mb-4">
+                    {/* Logo */}
+                    <img
+                      src={depedLogo}
+                      alt="Deped Logo"
+                      style={{ height: "80px", marginBottom: "8px" }}
+                    />
+
+                    {/* Titles */}
+                    <div className="text-center mb-2">
+                      <h5
+                        className="m-0"
+                        style={{ fontFamily: "'Old English Text MT', serif" }}
+                      >
+                        Republic of the Philippines
+                      </h5>
+                      <h2
+                        className="m-0"
+                        style={{ fontFamily: "'Old English Text MT', serif" }}
+                      >
+                        Department of Education
+                      </h2>
+                      <h6
+                        className="m-0"
+                        style={{ fontFamily: "'Trajan Pro', serif" }}
+                      >
+                        MIMAROPA REGION
+                      </h6>
+                      <h6
+                        className="m-0"
+                        style={{ fontFamily: "'Tahoma', serif" }}
+                      >
+                        SCHOOLS DIVISION OFFICE OF OCCIDENTAL MINDORO
+                      </h6>
+                      <h6
+                        className="m-0"
+                        style={{ fontFamily: "'Trajan Pro', serif" }}
+                      >
+                        SAN JOSE PILOT SCHOOL
+                      </h6>
+                      <h6
+                        className="m-0"
+                        style={{ fontFamily: "'Trajan Pro', serif" }}
+                      >
+                        San Jose, Occidental Mindoro
+                      </h6>
+                    </div>
+
+                    {/* Lesson Plan Title */}
+                    <h4
+                      className="m-0 mb-3"
+                      style={{ fontFamily: "'Times New Roman', serif" }}
+                    >
+                      <strong>DAILY LESSON PLAN</strong>
+                    </h4>
                   </header>
+
+                  {/* Editor Content */}
                   <EditorContent editor={editor} />
                 </div>
               </div>
