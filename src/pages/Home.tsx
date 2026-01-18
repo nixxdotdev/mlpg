@@ -7,7 +7,7 @@ const Home: React.FC = () => {
   const navigate = useNavigate(); // get navigation function
 
   const handleGetStarted = () => {
-    navigate("/tools"); // change URL to /tools
+    navigate("/login"); // change URL to /login
   };
 
   const welcomeRef = useRef<HTMLElement | null>(null);
@@ -18,7 +18,7 @@ const Home: React.FC = () => {
       ([entry]) => {
         setWelcomeVisible(entry.isIntersecting);
       },
-      { threshold: 0.4 }
+      { threshold: 0.4 },
     );
 
     if (welcomeRef.current) {

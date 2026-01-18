@@ -1,11 +1,153 @@
 import logo from "../assets/img/lpat_logo.png";
 import loginIllustration from "../assets/img/image.png"; // placeholder image
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const LoginPage: React.FC = () => {
   const [isRegister, setIsRegister] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
+  const navigate = useNavigate();
 
-  const toggleForm = () => setIsRegister((prev) => !prev);
+  // Form state
+  const [formData, setFormData] = useState({
+    fullName: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
+  });
+
+  const toggleForm = () => {
+    setIsRegister((prev) => !prev);
+    setError("");
+    setSuccess("");
+  };
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
+
+  const handleRegister = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setError("");
+    setSuccess("");
+
+    // Validation
+    if (!formData.email || !formData.password) {
+      setError("Email and password are required");
+      return;
+    }
+
+    if (formData.password !== formData.confirmPassword) {
+      setError("Passwords do not match");
+      return;
+    }
+
+    if (formData.password.length < 6) {
+      setError("Password must be at least 6 characters");
+      return;
+    }
+
+    try {
+      setLoading(true);
+      const response = await fetch(
+        "http://localhost:5000/api/v1/user/register",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            fullName: formData.fullName,
+            email: formData.email,
+            password: formData.password,
+            confirmPassword: formData.confirmPassword,
+          }),
+        },
+      );
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        setError(data.error || "Registration failed");
+        return;
+      }
+
+      setSuccess("Registration successful! Redirecting to login...");
+      setFormData({
+        fullName: "",
+        email: "",
+        password: "",
+        confirmPassword: "",
+      });
+
+      // Switch to login form after 2 seconds
+      setTimeout(() => {
+        setIsRegister(false);
+        setSuccess("");
+      }, 2000);
+    } catch (err) {
+      setError("An error occurred. Please try again.");
+      console.error(err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleLogin = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setError("");
+    setSuccess("");
+
+    // Validation
+    if (!formData.email || !formData.password) {
+      setError("Email and password are required");
+      return;
+    }
+
+    try {
+      setLoading(true);
+      const response = await fetch("http://localhost:5000/api/v1/user/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email: formData.email,
+          password: formData.password,
+        }),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        setError(data.error || "Login failed");
+        return;
+      }
+
+      setSuccess("Login successful! Redirecting...");
+      // Store user info in localStorage
+      localStorage.setItem("user", JSON.stringify(data.user));
+      localStorage.setItem("isLoggedIn", "true");
+
+      // Redirect to main page after 2 seconds
+      setTimeout(() => {
+        navigate("/tools");
+      }, 2000);
+    } catch (err) {
+      setError("An error occurred. Please try again.");
+      console.error(err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleSubmit = isRegister ? handleRegister : handleLogin;
 
   return (
     <>
@@ -45,33 +187,62 @@ const LoginPage: React.FC = () => {
           <div className="auth-form flex-1 p-5">
             <h2 className="mb-4">{isRegister ? "Register" : "Login"}</h2>
 
-            <form className="d-flex flex-column gap-3">
+            {error && (
+              <div
+                className="alert alert-danger p-3 rounded mb-3"
+                style={{ backgroundColor: "#f8d7da", color: "#721c24" }}
+              >
+                {error}
+              </div>
+            )}
+
+            {success && (
+              <div
+                className="alert alert-success p-3 rounded mb-3"
+                style={{ backgroundColor: "#d4edda", color: "#155724" }}
+              >
+                {success}
+              </div>
+            )}
+
+            <form className="d-flex flex-column gap-3" onSubmit={handleSubmit}>
               {isRegister && (
                 <input
                   type="text"
+                  name="fullName"
                   placeholder="Full Name"
                   className="form-input p-3 rounded border"
-                  required
+                  value={formData.fullName}
+                  onChange={handleInputChange}
                 />
               )}
               <input
                 type="email"
+                name="email"
                 placeholder="Email"
                 className="form-input p-3 rounded border"
+                value={formData.email}
+                onChange={handleInputChange}
                 required
               />
               <input
                 type="password"
+                name="password"
                 placeholder="Password"
                 className="form-input p-3 rounded border"
+                value={formData.password}
+                onChange={handleInputChange}
                 required
               />
 
               {isRegister && (
                 <input
                   type="password"
+                  name="confirmPassword"
                   placeholder="Confirm Password"
                   className="form-input p-3 rounded border"
+                  value={formData.confirmPassword}
+                  onChange={handleInputChange}
                   required
                 />
               )}
@@ -81,8 +252,9 @@ const LoginPage: React.FC = () => {
                 className={`button ${
                   isRegister ? "button-primary" : "button-primary"
                 }`}
+                disabled={loading}
               >
-                {isRegister ? "Register" : "Login"}
+                {loading ? "Processing..." : isRegister ? "Register" : "Login"}
               </button>
             </form>
 
