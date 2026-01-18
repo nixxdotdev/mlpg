@@ -56,7 +56,7 @@ const LoginPage: React.FC = () => {
     try {
       setLoading(true);
       const response = await fetch(
-        "http://localhost:5000/api/v1/user/register",
+        "https://mlpg.onrender.com/api/v1/user/register",
         {
           method: "POST",
           headers: {
@@ -112,16 +112,19 @@ const LoginPage: React.FC = () => {
 
     try {
       setLoading(true);
-      const response = await fetch("http://localhost:5000/api/v1/user/login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
+      const response = await fetch(
+        "https://mlpg.onrender.com/api/v1/user/login",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            email: formData.email,
+            password: formData.password,
+          }),
         },
-        body: JSON.stringify({
-          email: formData.email,
-          password: formData.password,
-        }),
-      });
+      );
 
       const data = await response.json();
 
