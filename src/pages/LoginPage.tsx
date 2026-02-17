@@ -70,7 +70,7 @@ const LoginPage: React.FC = () => {
           }),
         },
       );
-
+      
       const data = await response.json();
 
       if (!response.ok) {

@@ -339,18 +339,17 @@ p {
   justify-content: center;
 }
 
-/* Actual paper */
 .paper-page {
   width: 210mm;
-  /* A4 width */
-  min-height: 297mm;
-  /* A4 height */
+  min-height: 297mm;        
   background-color: white;
   padding: 25mm 20mm;
-  /* Word-like margins */
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
   border-radius: 4px;
-}
+  overflow: hidden;       
+  box-sizing: border-box; 
+} 
+
 
 /* Typography similar to Word */
 .paper-page h1 {
@@ -810,7 +809,7 @@ p {
     display: none;
     /* hide illustration on small screens */
   }
-}
+}         
 
 .paper-header {
   margin-bottom: 16px;
@@ -825,9 +824,10 @@ p {
 .ProseMirror {
   min-height: 300px;
   padding: 16px;
-  border: 1px solid #d1d1d1;
   border-radius: 6px;
   outline: none;
+  caret-color: #000000 !important;
+  cursor: text;
 }
 
 .ProseMirror:focus {
@@ -874,4 +874,36 @@ p {
 .ProseMirror table th {
   background: #f4f4f4;
   font-weight: bold;
+}
+
+@media print {
+  /* Hide UI elements */
+  .header-shadow, .tool-aside, .tool-drawer, .button {
+    display: none !important;
+  }
+
+  /* Reset Page Styling for Print */
+  .paper-page {
+    margin: 0 !important;
+    box-shadow: none !important;
+    border: none !important;
+    width: 100% !important;
+    height: auto !important;
+    transform: none !important; /* Disable Zoom */
+    overflow: visible !important;
+  }
+
+  /* Handle Table Breaks cleanly */
+  table {
+    page-break-inside: auto;
+  }
+  tr {
+    page-break-inside: avoid;
+    page-break-after: auto;
+  }
+  
+  /* Force page breaks on specific elements if needed */
+  .page-break {
+    page-break-after: always;
+  }
 }
