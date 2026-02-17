@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useState } from "react";
 import logo from "../assets/img/lpat_logo.png";
 import depedLogo from "../assets/img/deped-logo.png";
 import genIcon from "../assets/img/generator_icon.png";
@@ -150,7 +150,7 @@ const MainPage: React.FC = () => {
   const [isGenerating, setIsGenerating] = useState(false);
   const [showDownload, setShowDownload] = useState(false);
   const [fileName, setFileName] = useState("");
-  const [paperSize, setPaperSize] = useState("A4");
+  const [paperSize] = useState("A4");
   const [orientation] = useState("Portrait");
   const [margins, setMargins] = useState("Normal");
   const [zoom, setZoom] = useState<number>(1);
