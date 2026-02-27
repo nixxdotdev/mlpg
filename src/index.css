@@ -103,7 +103,7 @@ body {
   font-size: var(--fs-md);
   font-weight: var(--fw-regular);
   line-height: var(--lh-normal);
-  background-color: var(--brand-primary-soft);
+  background-color: var(--neutral-white);
   color: var(--neutral-text-primary);
 }
 
@@ -194,7 +194,7 @@ p {
   /* only below */
   z-index: 1000;
   /* keep header above content */
-  background-color: var(--brand-primary);
+  background-color: var(--brand-primary-soft);
   /* optional for clarity */
   position: sticky;
   /* optional: stick to top on scroll */
@@ -298,7 +298,7 @@ p {
 /* Drawer */
 .tool-drawer {
   width: 20%;
-  background-color: var(--neutral-white);
+  background-color: var(--brand-primary-soft);
   padding: var(--space-md);
   border-left: 1px solid var(--neutral-border-light);
   animation: slideIn 0.2s ease;
@@ -341,14 +341,14 @@ p {
 
 .paper-page {
   width: 210mm;
-  min-height: 297mm;        
+  min-height: 297mm;
   background-color: white;
   padding: 25mm 20mm;
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
   border-radius: 4px;
-  overflow: hidden;       
-  box-sizing: border-box; 
-} 
+  overflow: hidden;
+  box-sizing: border-box;
+}
 
 
 /* Typography similar to Word */
@@ -809,7 +809,7 @@ p {
     display: none;
     /* hide illustration on small screens */
   }
-}         
+}
 
 .paper-header {
   margin-bottom: 16px;
@@ -877,8 +877,12 @@ p {
 }
 
 @media print {
+
   /* Hide UI elements */
-  .header-shadow, .tool-aside, .tool-drawer, .button {
+  .header-shadow,
+  .tool-aside,
+  .tool-drawer,
+  .button {
     display: none !important;
   }
 
@@ -889,7 +893,8 @@ p {
     border: none !important;
     width: 100% !important;
     height: auto !important;
-    transform: none !important; /* Disable Zoom */
+    transform: none !important;
+    /* Disable Zoom */
     overflow: visible !important;
   }
 
@@ -897,11 +902,12 @@ p {
   table {
     page-break-inside: auto;
   }
+
   tr {
     page-break-inside: avoid;
     page-break-after: auto;
   }
-  
+
   /* Force page breaks on specific elements if needed */
   .page-break {
     page-break-after: always;

@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import logo from "../assets/img/lpat_logo.png";
-import depedLogo from "../assets/img/deped-logo.png";
 import genIcon from "../assets/img/generator_icon.png";
 import dlIcon from "../assets/img/download_icon.png";
 import editIcon from "../assets/img/edit_icon.png";
@@ -17,6 +16,7 @@ import { FontSize, TextStyle } from "@tiptap/extension-text-style";
 import { FontFamily } from "../utils/FontFamily";
 import InsertImage from "../utils/InsertImage";
 import type { CSSProperties } from "react";
+import { PaperHeader } from "../layouts/paperHeader";
 
 const MainPage: React.FC = () => {
   const [activeTool, setActiveTool] = useState<
@@ -50,97 +50,129 @@ const MainPage: React.FC = () => {
     content: `
 
       <table border="1" cellpadding="6" cellspacing="0" style="border-collapse:collapse; width:100%;">
-        <tr>
+      <tr>
+          <th>Name of Teacher</th>
+          <td></td>
           <th>Learning Area</th>
           <td>Mathematics</td>
+        </tr>  
+      <tr>
+          <th>School</th>
+          <td>San Jose Pilot School</td>
           <th>Grade Level</th>
           <td>One</td>
         </tr>
-        <tr>
-          <th>Teacher</th>
-          <td></td>
-          <th>School</th>
-          <td>San Jose Pilot School</td>
-        </tr>
-        <tr>
-          <th>Quarter & Week</th>
-          <td></td>
-          <th>Lesson Title</th>
-          <td>Counting Numbers 1–100</td>
-        </tr>
       </table>
 
       <br />
 
-      <h3>I. OBJECTIVES</h3>
+      <h3>I. CURRICULUM CONTENT, STANDARDS, AND LESSON COMPETENCIES</h3>
       <table border="1" cellpadding="6" cellspacing="0" style="border-collapse:collapse; width:100%;">
         <tr>
-          <th style="width:30%;">Learning Competencies</th>
-          <td>Identify and count numbers from 1 to 100</td>
+          <th style="width:30%;">A. Content Standards</th>
+          <td>The learners should have knowledge and understanding of addition of numbers, with sums up to 100.</td>
         </tr>
         <tr>
-          <th>Indicators</th>
-          <td>- Students can orally count numbers 1–100<br>- Students recognize written numbers</td>
+          <th>B. Performance Standards</th>
+          <td>By the end of the quarter, the learners are able to perform addition of numbers with sums up to 100. </td>
         </tr>
         <tr>
-          <th>Code</th>
-          <td>MA1-N-01.01</td>
-        </tr>
-      </table>
-
-      <br />
-
-      <h3>II. SUBJECT MATTER</h3>
-      <table border="1" cellpadding="6" cellspacing="0" style="border-collapse:collapse; width:100%;">
-        <tr>
-          <th style="width:30%;">Topic</th>
-          <td>Counting and number recognition</td>
+          <th>C. Learning Competencies</th>
+          <td>Add numbers with sums up to 100 without regrouping, using a variety of concrete and pictorial model for:-2-digit and 2-digit numbers</td>
         </tr>
         <tr>
-          <th>Materials</th>
-          <td>Flashcards, Worksheets, Number chart</td>
+          <th>D. Learning Objectives</th>
+          <td>By the end of the lesson, students will be able to add 2-digit numbers without regrouping.</td>
         </tr>
         <tr>
-          <th>References</th>
-          <td>DepEd Curriculum Guide</td>
-        </tr>
-      </table>
-
-      <br />
-
-      <h3>III. PROCEDURES</h3>
-      <table border="1" cellpadding="6" cellspacing="0" style="border-collapse:collapse; width:100%;">
-        <tr>
-          <th style="width:25%;">A. Review</th>
-          <td>Review numbers 1–50 using flashcards</td>
-        </tr>
-        <tr>
-          <th>B. Motivation</th>
-          <td>Ask students to count objects in class (books, chairs)</td>
-        </tr>
-        <tr>
-          <th>C. Lesson Proper</th>
+          <th>E. Integration</th>
           <td>
-            - Introduce numbers 51–100<br/>
-            - Show number chart<br/>
-            - Guided reading of numbers
+            •	Read and write numerals up to 100. 
           </td>
-        </tr>
+        </tr>        
+      </table>
+
+      <br />
+
+      <h3>II. CONTENT</h3>
+      <table border="1" cellpadding="6" cellspacing="0" style="border-collapse:collapse; width:100%;">
         <tr>
-          <th>D. Application</th>
-          <td>Students complete worksheets identifying numbers 1–100</td>
+          <th style="width:30%;">Topic Content</th>
+          <td>Pagdaragdag ng Dalawang Bilang na may 2-Digit na ang Kabuuan ay Hanggang 99 Gamit ang Counters na Walang Regrouping</td>
         </tr>
       </table>
 
       <br />
 
-      <h3>IV. EVALUATION</h3>
-      <p>Worksheet: Write and identify numbers shown on flashcards.</p>
+      <h3>III. LEARNING RESOURCES</h3>
+      <table border="1" cellpadding="6" cellspacing="0" style="border-collapse:collapse; width:100%;">
+        <tr>
+          <th style="width:25%;">A. References</th>
+          <td>MATHEMATICS 1 Curriculum Guide, Lesson Exemplar Quarter 2 Week 7</td>
+        </tr>
+        <tr>
+          <th>B. Other Learning Resources</th>
+          <td>Kuwento, bidyow, mga larawan, tarpapel</td>
+        </tr>
+      </table>
 
       <br />
 
-      <h3>V. ASSIGNMENT</h3>
-      <p>Write numbers 1–100 at home and color them.</p>
+      <h3>IV. TEACHING AND LEARNING PROCEDURES</h3>
+      <table border="1" cellpadding="6" cellspacing="0" style="border-collapse:collapse; width:100%;">
+        <tr>
+          <th style="width:25%;">A. Panimulang Gawain (Activating Prior Knowledge)</th>
+          <td></td>
+        </tr>
+        <tr>
+          <th style="width:25%;">B. Gawaing Paglalahad ng Layunin ng Aralin (Lesson Purpose/Intention)</th>
+          <td></td>
+        </tr>
+        <tr>
+          <th style="width:25%;">C. Gawaing Pag-unawa sa mga Susing- Salita/Parirala o Mahahalagang Konsepto sa Aralin (Lesson Language Practice)</th>
+          <td></td>
+        </tr>
+      </table>
+
+      <br />
+
+      <h3>V. DURING/LESSON PROPER</h3>
+      <table border="1" cellpadding="6" cellspacing="0" style="border-collapse:collapse; width:100%;">
+        <tr>
+          <th style="width:30%;">D. Pagbasa sa Mahahalagang Pag-unawa/Susing Ideya (Reading the Key Idea/Stem) </th>
+          <td></td>
+        </tr>
+        <tr>
+          <th style="width:30%;">E. Pagpapaunlad ng Kaalaman at Kasanayan sa Mahahalagang Pag-unawa/Susing Ideya (Developing Understanding of the Key Idea/Stem)</th>
+          <td></td>
+        </tr>
+        <tr>
+          <th style="width:30%;">F. Pagpapalalim ng Kaalaman at Kasanayan sa Mahahalagang Pag-unawa/Susing Ideya (Deepening Understanding of the Key Idea/Stem) </th>
+          <td></td>
+        </tr>
+      </table>
+
+      <br />
+      
+      <h3>VI. AFTER/POST-LESSON PROPER</h3>
+      <table border="1" cellpadding="6" cellspacing="0" style="border-collapse:collapse; width:100%;">
+         <tr>
+          <th style="width:30%;">G. Paglalapat at Paglalahat (Making Generalizations and Abstractions) </th>
+          <td></td>
+        </tr>
+        <tr>
+          <th style="width:30%;">H. Pagtataya ng Natutuhan (Evaluating Learning) </th>
+          <td></td>
+        </tr>
+        <tr>
+          <th style="width:30%;">I. Mga Dagdag na Gawain para sa Paglalapat o para sa Remediation (Additional Activities for Application or Remediation (if applicable) </th>
+          <td></td>
+        </tr>
+        <tr>
+          <th style="width:30%;">J. Remarks</th>
+          <td></td>
+        </tr>
+      </table>
     `,
   });
 
@@ -202,53 +234,6 @@ const MainPage: React.FC = () => {
 
     return style;
   };
-
-  const PaperHeader = () => (
-    <header className="paper-header d-flex flex-column align-items-center mb-4">
-      {/* Logo */}
-      <img
-        src={depedLogo}
-        alt="Deped Logo"
-        style={{ height: "80px", marginBottom: "8px" }}
-      />
-
-      {/* Titles */}
-      <div className="text-center mb-2">
-        <h5
-          className="m-0"
-          style={{ fontFamily: "'Old English Text MT', serif" }}
-        >
-          Republic of the Philippines
-        </h5>
-        <h2
-          className="m-0"
-          style={{ fontFamily: "'Old English Text MT', serif" }}
-        >
-          Department of Education
-        </h2>
-        <h6 className="m-0" style={{ fontFamily: "'Trajan Pro', serif" }}>
-          MIMAROPA REGION
-        </h6>
-        <h6 className="m-0" style={{ fontFamily: "'Tahoma', serif" }}>
-          SCHOOLS DIVISION OFFICE OF OCCIDENTAL MINDORO
-        </h6>
-        <h6 className="m-0" style={{ fontFamily: "'Trajan Pro', serif" }}>
-          SAN JOSE PILOT SCHOOL
-        </h6>
-        <h6 className="m-0" style={{ fontFamily: "'Trajan Pro', serif" }}>
-          San Jose, Occidental Mindoro
-        </h6>
-      </div>
-
-      {/* Lesson Plan Title */}
-      <h4
-        className="m-0 mb-3"
-        style={{ fontFamily: "'Times New Roman', serif" }}
-      >
-        <strong>DETAILED LESSON PLAN</strong>
-      </h4>
-    </header>
-  );
 
   return (
     <>
