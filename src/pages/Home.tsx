@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
-import LandingHero from "../components/LandingHero";
 import homeBg from "../assets/img/home_bg.png";
 import { useNavigate } from "react-router-dom";
+import logo from "../assets/img/lpat_logo.png";
 
 const Home: React.FC = () => {
   const navigate = useNavigate(); // get navigation function
@@ -32,8 +32,12 @@ const Home: React.FC = () => {
     <>
       {/* Landing */}
       <section className="landing">
-        <LandingHero />
-        <p className="scroll-hint">Scroll down</p>
+        <img src={logo} alt="LPAT Logo" />
+        <h1 className="hero-title">Lesson Plan Authoring Tool</h1>
+        <p className="hero-subtitle">
+          Generate, create, edit, and export professional lesson plans for free
+          with AI.
+        </p>
       </section>
 
       {/* Welcome */}
