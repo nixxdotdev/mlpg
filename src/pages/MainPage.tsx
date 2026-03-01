@@ -15,6 +15,7 @@ import TableHeader from "@tiptap/extension-table-header";
 import { FontSize, TextStyle } from "@tiptap/extension-text-style";
 import { FontFamily } from "../utils/FontFamily";
 import InsertImage from "../utils/InsertImage";
+import { parseLessonPlan, applyLessonPlan } from "../utils/lessonPlanParser";
 import type { CSSProperties } from "react";
 import { PaperHeader } from "../layouts/paperHeader";
 
@@ -70,25 +71,23 @@ const MainPage: React.FC = () => {
       <table border="1" cellpadding="6" cellspacing="0" style="border-collapse:collapse; width:100%;">
         <tr>
           <th style="width:30%;">A. Content Standards</th>
-          <td>The learners should have knowledge and understanding of addition of numbers, with sums up to 100.</td>
+          <td></td>
         </tr>
         <tr>
           <th>B. Performance Standards</th>
-          <td>By the end of the quarter, the learners are able to perform addition of numbers with sums up to 100. </td>
+          <td></td>
         </tr>
         <tr>
           <th>C. Learning Competencies</th>
-          <td>Add numbers with sums up to 100 without regrouping, using a variety of concrete and pictorial model for:-2-digit and 2-digit numbers</td>
+          <td></td>
         </tr>
         <tr>
           <th>D. Learning Objectives</th>
-          <td>By the end of the lesson, students will be able to add 2-digit numbers without regrouping.</td>
+          <td></td>
         </tr>
         <tr>
           <th>E. Integration</th>
-          <td>
-            •	Read and write numerals up to 100. 
-          </td>
+          <td></td>
         </tr>        
       </table>
 
@@ -98,7 +97,7 @@ const MainPage: React.FC = () => {
       <table border="1" cellpadding="6" cellspacing="0" style="border-collapse:collapse; width:100%;">
         <tr>
           <th style="width:30%;">Topic Content</th>
-          <td>Pagdaragdag ng Dalawang Bilang na may 2-Digit na ang Kabuuan ay Hanggang 99 Gamit ang Counters na Walang Regrouping</td>
+          <td></td>
         </tr>
       </table>
 
@@ -108,11 +107,11 @@ const MainPage: React.FC = () => {
       <table border="1" cellpadding="6" cellspacing="0" style="border-collapse:collapse; width:100%;">
         <tr>
           <th style="width:25%;">A. References</th>
-          <td>MATHEMATICS 1 Curriculum Guide, Lesson Exemplar Quarter 2 Week 7</td>
+          <td></td>
         </tr>
         <tr>
           <th>B. Other Learning Resources</th>
-          <td>Kuwento, bidyow, mga larawan, tarpapel</td>
+          <td></td>
         </tr>
       </table>
 
@@ -182,6 +181,7 @@ const MainPage: React.FC = () => {
   const [isGenerating, setIsGenerating] = useState(false);
   const [showDownload, setShowDownload] = useState(false);
   const [fileName, setFileName] = useState("");
+  const [aiText, setAiText] = useState("");
   const [paperSize] = useState("A4");
   const [orientation] = useState("Portrait");
   const [margins, setMargins] = useState("Normal");
@@ -195,6 +195,18 @@ const MainPage: React.FC = () => {
       setIsGenerating(false);
       setShowGenerator(false);
     }, 2000);
+  };
+
+  const insertParsedPlan = () => {
+    const plan = parseLessonPlan(aiText || "");
+    if (!plan) {
+      window.alert(
+        "Unable to parse lesson plan. Provide valid JSON or tagged text.",
+      );
+      return;
+    }
+    applyLessonPlan(editor, plan);
+    setShowGenerator(false);
   };
 
   const getPaperStyle = (size: string, orient: string, margin: string) => {
@@ -542,7 +554,35 @@ const MainPage: React.FC = () => {
                         />
                       </div>
 
-                      {/* Action button */}
+                      {/* AI Output / Paste Area */}
+                      <div className="generator-input">
+                        <textarea
+                          placeholder="Paste AI output here (JSON or <tag>...</tag>)"
+                          value={aiText}
+                          onChange={(e) => setAiText(e.target.value)}
+                          rows={6}
+                          style={{ width: "100%" }}
+                          disabled={isGenerating}
+                        />
+                      </div>
+
+                      <div
+                        style={{
+                          display: "flex",
+                          gap: "8px",
+                          marginTop: "8px",
+                        }}
+                      >
+                        <button
+                          className="button button-primary generator-btn"
+                          onClick={insertParsedPlan}
+                          disabled={isGenerating}
+                        >
+                          Insert Parsed Lesson Plan
+                        </button>
+                      </div>
+
+                      {/* Action button
                       <button
                         className="button button-primary generator-btn"
                         onClick={handleGenerate}
@@ -551,7 +591,7 @@ const MainPage: React.FC = () => {
                         {isGenerating
                           ? "Generating..."
                           : "Generate Detailed Lesson Plan"}
-                      </button>
+                      </button> */}
                     </div>
                   </div>
                 </>
