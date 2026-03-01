@@ -581,8 +581,6 @@ const MainPage: React.FC = () => {
                           Insert Parsed Lesson Plan
                         </button>
                       </div>
-
-                      {/* Action button
                       <button
                         className="button button-primary generator-btn"
                         onClick={handleGenerate}
@@ -591,7 +589,7 @@ const MainPage: React.FC = () => {
                         {isGenerating
                           ? "Generating..."
                           : "Generate Detailed Lesson Plan"}
-                      </button> */}
+                      </button>
                     </div>
                   </div>
                 </>
